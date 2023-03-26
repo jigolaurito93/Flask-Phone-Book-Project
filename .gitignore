@@ -3,3 +3,6 @@ venv/
 
 # Ignore __pycache__
 __pycache__/
+
+# Ignore .env file, this is where we keep screts
+.env
