@@ -6,3 +6,6 @@ __pycache__/
 
 # Ignore .env file, this is where we keep screts
 .env
+
+# Ignore the SQLite database (for developmental use only)
+app.db
