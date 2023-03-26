@@ -28,8 +28,22 @@ def signup():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     form = LoginForm()
+    if form.validate_on_submit():
+        print('Successfull Logged In..')
+        username = form.username.data
+        password = form.password.data
+        print(username, password)
+        # TODO: Check if there is a user with username and that password
+        #Fake an invalid log in
+        if password == 'abc':
+            flash('Invalid username and/or password. Please try again', 'danger')
+            return redirect(url_for('login'))
+
+        flash(f'You have succesfully logged in as {username}!', 'success')
+        return redirect(url_for('index'))
     return render_template('login.html', form=form)
 
 @app.route('/home')
 def home():
+   
     return render_template('home.html')
