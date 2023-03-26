@@ -11,6 +11,13 @@
     {% block navbar %}
         {% include 'nav.html' %}
     {% endblock %}
+
+    <div class="row bg-secondary">
+        {% include 'alerts.html' %}
+    </div>
+
+
+
     <div class="row bg-info py-5">
         <div class="col text-center text-white ">
             {% block header %}
