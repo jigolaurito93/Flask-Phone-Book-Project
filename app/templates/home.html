@@ -3,9 +3,17 @@
 {% block title %}Home{% endblock %}
 
 {% block navbar %}
-    {% include 'navbar2.html' %}
+    {% include 'nav.html' %}
 {% endblock %}  
 
+{% block header %}
+            <h1 class="fs-1 fw-semibold">Instabook Premium</h1>
+            {% if current_user.is_authenticated %}
+                <h5>Nice to see you again, {{ current_user.username }}!</h5>
+            {% else %}
+            <h5>Please Sign Up or Log In to Add Phone Number</h5>
+            {% endif %}
+{% endblock %}
 
 {% block content %}
     <h2 class="text-center p-5"></h2>  

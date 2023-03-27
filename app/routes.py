@@ -2,6 +2,7 @@ from app import app, db
 from flask import render_template, redirect, url_for, flash
 from app.forms import SignUpForm, LoginForm, PhoneForm
 from app.models import User, Address
+from flask_login import login_user, logout_user
 
 @app.route("/")
 def index():
@@ -19,7 +20,7 @@ def add_phone():
         print(first, last, address, phone)
         new_contact = Address(first_name=first, last_name=last, address=address, phone_number=phone)
         flash(f"{new_contact.first_name} {new_contact.last_name} has been added to the phone book", "success")
-        return redirect(url_for('home.html'))
+        return redirect(url_for('home'))
     return render_template('add_phone.html', form=form)
 
 @app.route("/signup", methods=["GET", "POST"])
@@ -56,15 +57,21 @@ def login():
         # TODO: Check if there is a user with username and that password
         user = User.query.filter_by(username=username).first()
         if user is not None and user.check_password(password):
-            # login_user(user)
+            login_user(user)
             flash(f'You have succesfully logged in as {username}!', 'success')
-            return redirect(url_for('home.html'))
+            return redirect(url_for('home'))
         else:
             flash('Invalid username and/or password. Please try again', 'danger')
             return redirect(url_for('login'))
 
         
     return render_template('login.html', form=form)
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    flash("You have logged out", "info")
+    return redirect(url_for('index'))
 
 @app.route('/home')
 def home():

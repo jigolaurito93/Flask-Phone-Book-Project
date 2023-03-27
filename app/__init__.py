@@ -4,6 +4,7 @@ from config import Config
 # Import the classes from Flask-SQLAlchemy
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask_login import LoginManager
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -12,6 +13,9 @@ app.config.from_object(Config)
 db = SQLAlchemy(app)
 # Create an instance of Migrate that will track our db and app
 migrate = Migrate(app, db)
+
+# Create an instance of the LoginManager to set up Authentication
+login = LoginManager(app)
 
 # import all of the routes from the routes file and models from modelsd file into the current package
 from app import routes, models
