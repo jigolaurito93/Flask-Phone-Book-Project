@@ -15,3 +15,10 @@ class LoginForm(FlaskForm):
     username = StringField('Username', validators=[InputRequired()])
     password = PasswordField('Password', validators=[InputRequired()])
     submit = SubmitField('Log In')
+
+class PhoneForm(FlaskForm):
+    first_name = StringField('First Name', validators=[InputRequired()])
+    last_name = StringField('Last Name', validators=[InputRequired()])
+    address = StringField('Address')
+    phone_number = StringField('Phone Number', validators=[InputRequired()])
+    submit = SubmitField()
