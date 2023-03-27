@@ -19,3 +19,6 @@ class User(db.Model):
 
     def __repr__(self):
         return f"<User {self.id}|{self.username}>"
+    
+    def check_password(self, password_guess):
+        return check_password_hash(self.password, password_guess)

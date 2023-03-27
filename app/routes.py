@@ -43,13 +43,16 @@ def login():
         password = form.password.data
         print(username, password)
         # TODO: Check if there is a user with username and that password
-        #Fake an invalid log in
-        if password == 'abc':
+        user = User.query.filter_by(username=username).first()
+        if user is not None and user.check_password(password):
+            # login_user(user)
+            flash(f'You have succesfully logged in as {username}!', 'success')
+            return redirect(url_for('index'))
+        else:
             flash('Invalid username and/or password. Please try again', 'danger')
             return redirect(url_for('login'))
 
-        flash(f'You have succesfully logged in as {username}!', 'success')
-        return redirect(url_for('index'))
+        
     return render_template('login.html', form=form)
 
 @app.route('/home')
