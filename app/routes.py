@@ -98,22 +98,30 @@ def view_single_contact(contact_id):
 @app.route('/edit-contacts/<contact_id>', methods=["GET", "POST"])
 @login_required
 def edit_contact(contact_id):
+    form = PhoneForm()
     contact_to_edit = Contact.query.get_or_404(contact_id)
     if current_user != contact_to_edit.user:
         flash("You do not have permission to edit this contact", "danger")
         return redirect(url_for('home'))
-    form = PhoneForm()
-    if form.validate_on_submit():
-        # Get form data
-        new_first_name = form.first_name.data
-        new_last_name = form.last_name.data
-        address = form.address.data
-        phone_number = form.phone_number.data
-        # update the post to edit with the form data
-        contact_to_edit.update(first_name=new_first_name, last_name=new_last_name, address=address, phone_number=phone_number)
+    
 
+    if form.validate_on_submit():
+        # If form submitted, update Contact
+        contact_to_edit.first_name = form.first_name.data
+        contact_to_edit.last_name = form.last_name.data
+        contact_to_edit.address = form.address.data
+        contact_to_edit.phone_number = form.phone_number.data
+        # Commit that to the database
+        db.session.commit()
         flash(f'{contact_to_edit.email} has been updated', 'primary')
-        return redirect(url_for('view_single_contact', contact_id=contact_to_edit.id))
+        return redirect(url_for('home'))
+        # return redirect(url_for('view_single_contact', contact_id=contact_to_edit.id))
+    
+    # Pre-populate form with contact feed
+    form.first_name.data = contact_to_edit.first_name
+    form.last_name.data = contact_to_edit.last_name
+    form.address.data = contact_to_edit.address
+    form.phone_number.data = contact_to_edit.phone_number
 
     return render_template('edit_contact.html', contact=contact_to_edit, form=form)
 

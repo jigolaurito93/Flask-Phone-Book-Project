@@ -1,28 +1,42 @@
-{% extends 'base.html' %} 
+{% extends 'base.html' %}
 
 {% block title %}Instabook | Edit Contact{% endblock %}
 
+{% block navbar %}
+    {% include 'nav.html' %}
+{% endblock %}  
+
+{% block header %}
+    <h1>Edit { form.first_name } { form.last_name } </h1>
+{% endblock %}
+
 {% block content %}
-    <form method='post'>
-        {{form.csrf_token}}
-        <div>
-
-            {{ form.first_name.label }}
-            {{ form.first_name(class='form-control', value= contact.first_name ) }}
-
-            {{ form.last_name.label }}
-            {{ form.last_name(class='form-control', value= contact.last_name ) }}
-
-            {{ form.mobile.label }}
-            {{ form.mobile(class='form-control', value= contact.address ) }}
-
-            {{ form.work_phone.label }}
-            {{ form.work_phone(class='form-control', value= contact.phone_number ) }}
-
-            <div>{{ form.submit(class='btn btn-primary mt-3')}} <a class="btn btn-secondary mt-3" href="{{ url_for('home') }}" role="button">Cancel</a></div>
-            
-
+    <div class="row">
+        <div class="d-flex justify-content-center">
+            <div class="card mt-5" style="width: 30rem">
+                <div class="card-body mx-4 my-3">
+                    <form action="" method="post">
+                        {{ form.csrf_token }}
+                        <div class="my-3">
+                        {{ form.first_name.label }}*
+                        {{ form.first_name(class='form-control', placeholder="Enter Contact's First Name") }}
+                        </div>
+                        <div class="my-3">
+                        {{ form.last_name.label }}*
+                        {{ form.last_name(class='form-control', placeholder="Enter Contact's Last Name") }}
+                        </div>
+                        <div class="my-3">
+                        {{ form.address.label }}
+                        {{ form.address(class='form-control', placeholder="Enter Contact's Address") }}
+                        </div>
+                        <div class="my-3">
+                        {{ form.phone_number.label }}*
+                        {{ form.phone_number(class='form-control', placeholder="Enter Contact's Phone Number") }}
+                        </div>
+                        {{ form.submit(class='btn btn-primary w-100 mt-3' value = "Edit Contact") }}
+                    </form>
+                </div>
+            </div>
         </div>
-
-    </form>
-{% endblock content%}
+    </div>
+{% endblock %}
