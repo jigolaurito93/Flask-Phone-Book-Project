@@ -15,6 +15,51 @@
             {% endif %}
 {% endblock %}
 
+
 {% block content %}
-    <h2 class="text-center p-5"></h2>  
+<div class="row">
+    <div class="d-flex justify-content-center">
+        <div class="card mt-5 p-1" style="width: 50rem;" >
+            <div class="card-body">
+                  <div class="col">
+                    <div class="card-body">
+                      <h3 class="card-title text-center mt-3 fs-1">Contacts</h3>
+                      <p class="card-text text-center"> <i>Your Contacts Listed Below<i></p>
+                    </div> 
+            </div>
+        </div>
+    </div>
+</div>
+       
+<div class="mt-5 mb-3">
+  {% if current_user.is_anonymous == False %}
+    <h5 class="fs-3">Welcome, {{ current_user.email }} </h5>
+</div>
+    {% if contacts != [] %}
+      {% for contact in contacts %}
+          <div class="card mb-4 ps-5" style="width:50rem">
+            <div class="card-body">
+              <p><h4 class="card-title">{{ contact.first_name }} {{ contact.last_name }}</h4></p>
+              <p><h6 class="card-subtitle">mobile: {{ contact.address }}</h6></p>
+              <p><h6 class="card-subtitle">work: {{ contact.phone_number }}</h6></p>
+              <a href="{{ url_for('view_single_contact', contact_id=contact.id) }}"><p style="font-size:small; color:darkcyan"><em>Edit Contact</em></p></a>
+            </div>
+          </div>
+      {% endfor %}
+    {% else %}
+        <div>
+          <h4>Let's create some contacts!</h4>
+          <br>
+          <a class="btn btn-success mt-3" href="{{ url_for('add_contact') }}" role="button">Add Contact</a>
+        </div>
+    {% endif %}
+
+  {% else %}
+    <div>
+      <h4>Please log in to view your contacts</h4>
+      <br>
+      <a class="btn btn-secondary mt-3" href="{{ url_for('login') }}" role="button">Log in</a>
+    </div>
+    
+  {% endif %}
 {% endblock %}
