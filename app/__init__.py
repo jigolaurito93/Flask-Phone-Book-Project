@@ -17,6 +17,11 @@ migrate = Migrate(app, db)
 # Create an instance of the LoginManager to set up Authentication
 login = LoginManager(app)
 
+# Tell the login manager where to redirect if a user is not logged in
+login.login_view = 'login'
+login.login_message = 'Please log in to access this page.'
+login.login_message_category = 'danger'
+
 # import all of the routes from the routes file and models from modelsd file into the current package
 from app import routes, models
 # or from app  import routes

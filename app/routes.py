@@ -2,13 +2,14 @@ from app import app, db
 from flask import render_template, redirect, url_for, flash
 from app.forms import SignUpForm, LoginForm, PhoneForm
 from app.models import User, Address
-from flask_login import login_user, logout_user
+from flask_login import login_user, logout_user, login_required
 
 @app.route("/")
 def index():
     return render_template('index.html')
 
 @app.route("/add-phone", methods=["GET", "POST"])
+@login_required
 def add_phone():
     form = PhoneForm()
     # Check if the form was submitted and is valid
@@ -74,6 +75,6 @@ def logout():
     return redirect(url_for('index'))
 
 @app.route('/home')
+@login_required
 def home():
-   
     return render_template('home.html')
